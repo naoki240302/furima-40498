@@ -8,12 +8,10 @@ class User < ApplicationRecord
   validates :password, format: { with: VALID_PASSWORD_REGEX }
 
   validates :nickname, presence: true
-  validates :last_name, presence: true,
-                        format: { with: /\A[ぁ-んァ-ン一-龥]/, message: 'is invalid. Input full-width characters' }
-  validates :first_name, presence: true, format: { with: /\A[ぁ-んァ-ン一-龥]/, message: 'is invalid. Input full-width characters' }
-  validates :kana_last, presence: true,
-                        format: { with: /\A[ァ-ヶー－]+\z/, message: 'is invalid. Input full-width characters' }
-  validates :kana_first, presence: true,
-                         format: { with: /\A[ァ-ヶー－]+\z/, message: 'is invalid. Input full-width characters' }
+  validates :last_name, presence: true, format: { with: /\A[ぁ-んァ-ヶ一-龥々ー]+\z/, message: 'is invalid. Input full-width characters' }
+  validates :first_name, presence: true,
+                         format: { with: /\A[ぁ-んァ-ヶ一-龥々ー]+\z/, message: 'is invalid. Input full-width characters' }
+  validates :kana_last, presence: true, format: { with: /\A[ァ-ヶー－]+\z/, message: 'is invalid. Input full-width characters' }
+  validates :kana_first, presence: true, format: { with: /\A[ァ-ヶー－]+\z/, message: 'is invalid. Input full-width characters' }
   validates :birthday, presence: true
 end

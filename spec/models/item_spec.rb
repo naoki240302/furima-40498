@@ -28,10 +28,15 @@ RSpec.describe Item, type: :model do
         @item.valid?
         expect(@item.errors.full_messages).to include("Price can't be blank")
       end
-      it 'priceは300~9999999の範囲外では登録できない' do
+      it 'priceは10000000以上では登録できない' do
         @item.price = 10_000_000
         @item.valid?
-        expect(@item.errors.full_messages).to include('Price must be in 300..9999999')
+        expect(@item.errors.full_messages).to include('Price must be less than or equal to 9999999')
+      end
+      it 'priceは300以内では登録できない' do
+        @item.price = 100
+        @item.valid?
+        expect(@item.errors.full_messages).to include('Price must be greater than or equal to 300')
       end
       it 'priceは半角数値以外では登録できない' do
         @item.price = '１０'
@@ -44,9 +49,9 @@ RSpec.describe Item, type: :model do
         expect(@item.errors.full_messages).to include("Category can't be blank")
       end
       it 'category_idが指定以外の番号では登録できない' do
-        @item.category_id = 12
+        @item.category_id = 1
         @item.valid?
-        expect(@item.errors.full_messages).to include('Category is not included in the list')
+        expect(@item.errors.full_messages).to include('Category must be other than 1')
       end
       it 'condition_idが空では登録できない' do
         @item.condition_id = ''
@@ -54,9 +59,9 @@ RSpec.describe Item, type: :model do
         expect(@item.errors.full_messages).to include("Condition can't be blank")
       end
       it 'condition_idが指定以外の番号では登録できない' do
-        @item.condition_id = 8
+        @item.condition_id = 1
         @item.valid?
-        expect(@item.errors.full_messages).to include('Condition is not included in the list')
+        expect(@item.errors.full_messages).to include('Condition must be other than 1')
       end
       it 'charge_load_idが空では登録できない' do
         @item.charge_load_id = ''
@@ -64,9 +69,9 @@ RSpec.describe Item, type: :model do
         expect(@item.errors.full_messages).to include("Charge load can't be blank")
       end
       it 'charge_load_idが指定以外の番号では登録できない' do
-        @item.charge_load_id = 4
+        @item.charge_load_id = 1
         @item.valid?
-        expect(@item.errors.full_messages).to include('Charge load is not included in the list')
+        expect(@item.errors.full_messages).to include('Charge load must be other than 1')
       end
       it 'shipping_time_idが空では登録できない' do
         @item.shipping_time_id = ''
@@ -74,9 +79,9 @@ RSpec.describe Item, type: :model do
         expect(@item.errors.full_messages).to include("Shipping time can't be blank")
       end
       it 'shipping_time_idが指定以外の番号では登録できない' do
-        @item.shipping_time_id = 5
+        @item.shipping_time_id = 1
         @item.valid?
-        expect(@item.errors.full_messages).to include('Shipping time is not included in the list')
+        expect(@item.errors.full_messages).to include('Shipping time must be other than 1')
       end
       it 'area_idが空では登録できない' do
         @item.area_id = ''
@@ -84,9 +89,9 @@ RSpec.describe Item, type: :model do
         expect(@item.errors.full_messages).to include("Area can't be blank")
       end
       it 'area_idが指定以外の番号では登録できない' do
-        @item.area_id = 49
+        @item.area_id = 1
         @item.valid?
-        expect(@item.errors.full_messages).to include('Area is not included in the list')
+        expect(@item.errors.full_messages).to include('Area must be other than 1')
       end
       it '画像が空では登録できない' do
         @item.image = nil

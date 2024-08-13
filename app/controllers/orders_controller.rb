@@ -1,4 +1,6 @@
 class OrdersController < ApplicationController
+  before_action :move_to_index, only: [:index]
+  before_action :sold_out, only: [:index]
   def index
     gon.public_key = ENV['PAYJP_PUBLIC_KEY']
     @order_delivery = OrderDelivery.new
@@ -32,5 +34,20 @@ class OrdersController < ApplicationController
       card: order_params[:token], # カードトークン
       currency: 'jpy' # 通貨の種類（日本円）
     )
+  end
+
+  def move_to_index
+    @item = Item.find(params[:item_id])
+    @user = @item.user
+    return unless @user == current_user || current_user.nil?
+
+    redirect_to '/'
+  end
+
+  def sold_out
+    @item = Item.find(params[:item_id])
+    return unless @item.sold_out?
+
+    redirect_to '/'
   end
 end

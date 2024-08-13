@@ -1,7 +1,7 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, except: [:show, :index]
   before_action :move_to_index, only: [:edit, :update, :destroy]
-  before_action :find_item, only: [:show, :edit, :update, :destroy]
+  before_action :find_item, only: [:show, :edit, :update, :destroy, :move_to_index, :sold_out]
   before_action :sold_out, only: [:edit]
 
   def index
@@ -48,7 +48,6 @@ class ItemsController < ApplicationController
   end
 
   def move_to_index
-    @item = Item.find(params[:id])
     @user = @item.user
     return unless @user != current_user
 
@@ -60,7 +59,6 @@ class ItemsController < ApplicationController
   end
 
   def sold_out
-    @item = Item.find(params[:id])
     return unless @item.sold_out?
 
     redirect_to action: :index

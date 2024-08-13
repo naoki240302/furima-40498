@@ -9,7 +9,7 @@ class OrderDelivery
     validates :area_id, numericality: { other_than: 1 }
     validates :address
     validates :street
-    validates :phone_number, format: { with: /\A\d+\z/, message: 'is invalid. Input only half-width numbers.' }
+    validates :phone_number, format: { with: /\A\d{10,11}\z/, message: 'is invalid. Input only 10 to 11 half-width numbers.' }
   end
 
   def save

@@ -93,3 +93,7 @@ gem 'image_processing', '~> 1.2'
 gem 'activestorage-validator'
 
 gem 'pry-rails'
+
+gem 'payjp'
+
+gem 'gon'

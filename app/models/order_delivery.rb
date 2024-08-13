@@ -1,6 +1,6 @@
 class OrderDelivery
   include ActiveModel::Model
-  attr_accessor :user_id, :item_id, :post_number, :area_id, :address, :street, :building, :phone_number
+  attr_accessor :user_id, :item_id, :post_number, :area_id, :address, :street, :building, :phone_number, :token
 
   with_options presence: true do
     validates :user_id
@@ -10,6 +10,7 @@ class OrderDelivery
     validates :address
     validates :street
     validates :phone_number, format: { with: /\A\d{10,11}\z/, message: 'is invalid. Input only 10 to 11 half-width numbers.' }
+    validates :token
   end
 
   def save

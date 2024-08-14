@@ -6,6 +6,7 @@ class Item < ApplicationRecord
   belongs_to :charge_load
   belongs_to :shipping_time
   belongs_to :area
+  has_one :order
   has_one_attached :image
 
   validates :item_name, presence: true
@@ -20,4 +21,8 @@ class Item < ApplicationRecord
   validates :area_id, presence: true, numericality: { other_than: 1 }, inclusion: { in: Area.pluck(:id) }
 
   validates :image, presence: true, blob: { content_type: :image }
+
+  def sold_out?
+    Order.exists?(item_id: id)
+  end
 end

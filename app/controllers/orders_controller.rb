@@ -1,8 +1,8 @@
 class OrdersController < ApplicationController
+  before_action :find_item, only: [:index, :create]
   before_action :authenticate_user!, only: [:index]
   before_action :move_to_index, only: [:index]
   before_action :sold_out, only: [:index]
-  before_action :find_item, only: [:index, :create]
   before_action :gon_public_key, only: [:index, :create]
   def index
     @order_delivery = OrderDelivery.new
@@ -36,7 +36,6 @@ class OrdersController < ApplicationController
   end
 
   def move_to_index
-    @item = Item.find(params[:item_id])
     @user = @item.user
     return unless @user == current_user
 
@@ -44,7 +43,6 @@ class OrdersController < ApplicationController
   end
 
   def sold_out
-    @item = Item.find(params[:item_id])
     return unless @item.sold_out?
 
     redirect_to '/'
